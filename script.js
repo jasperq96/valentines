@@ -1,7 +1,7 @@
 // Elements
 const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
-const noBtn = document.querySelector(".no-btn");
+const noBtn = document.getElementById("no-button");
 const yesBtn = document.querySelector(".yes-btn");
 
 const title = document.getElementById("letter-title");
@@ -20,33 +20,62 @@ envelope.addEventListener("click", () => {
     },50);
 });
 
-// Logic to make Yes button grow
-
-let yesScale = 1;
+// Logic to make Yes button interactive
 
 yesBtn.style.position = "relative"
 yesBtn.style.transformOrigin = "center center";
 yesBtn.style.transition = "transform 0.3s ease";
 
-noBtn.addEventListener("click", () => {
-    yesScale += 2;
 
-    if(yesBtn.style.position != "fixed") {
-       yesBtn.style.position = "fixed";
-       yesBtn.style.top = "50%";
-       yesBtn.style.left = "50%";
-       yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-    }else{
-       yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-    }
-});
 
 // Yes button is clicked
 
 yesBtn.addEventListener("click", () => {
-    title.textContent = "LET'S GOOOOO!!!";
-    dogImg.src = "Dog-wagging.gif";
+    title.textContent = "Of course you will!";
+    dogImg.src = "duck_butt_slap.gif";
     document.querySelector(".letter-window").classList.add("final");
     buttons.style.display = "none";
     finalText.style.display = "block";
 });
+
+
+// Runaway No Button
+let moveCount = 0;
+
+function moveNoButton() {
+    const letterWindow = document.querySelector(".letter-window");
+    const letterRect = letterWindow.getBoundingClientRect();
+    const noBtnRect = noBtn.getBoundingClientRect();
+    
+    const borderWidth = 3;
+    const padding = 15;
+    
+    // Calculate bounds for the button position (left/top coordinates)
+    const minLeftX = letterRect.left + borderWidth + padding;
+    const maxLeftX = letterRect.right - borderWidth - padding - noBtnRect.width;
+    const minTopY = letterRect.top + borderWidth + padding;
+    const maxTopY = letterRect.bottom - borderWidth - padding - noBtnRect.height;
+    
+    // Generate random position within bounds
+    const randX = minLeftX + Math.random() * (maxLeftX - minLeftX);
+    const randY = minTopY + Math.random() * (maxTopY - minTopY);
+    
+    // Switch to fixed positioning on first trigger
+    if (noBtn.style.position !== "fixed") {
+        noBtn.style.position = "fixed";
+    }
+    
+    noBtn.style.left = randX + "px";
+    noBtn.style.top = randY + "px";
+    
+    // Increment move count
+    moveCount++;
+    
+    // After 10 moves, change the image and text
+    if (moveCount === 5) {
+        dogImg.src = "sus.gif";
+        title.textContent = "Where you clicking?";
+    }
+}
+
+noBtn.addEventListener("mouseenter", moveNoButton);
