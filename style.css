@@ -8,6 +8,10 @@ body{
     font-family: "Pixelify Sans", sans-serif;
 }
 
+:root{
+    --scale: 1;
+}
+
 /* Envelope Screen */
 #envelope-container {
     text-align: center;
@@ -58,13 +62,16 @@ body{
     gap:1px;
     /* padding-top:180px; */
 
-    transform:scale(1.2);
+    /* use a scale multiplier variable so JS can adjust overall scale */
+    --s: 1.2;
+    transform: scale(calc(var(--scale) * var(--s)));
     opacity:0;
     transition:transform 0.6s ease, opacity 0.6s ease;
 }
 
 .letter-window.open {
-    transform:scale(1);
+    --s: 1;
+    transform: scale(calc(var(--scale) * var(--s)));
     opacity:1;
     display:flex;
     flex-direction:column;
@@ -75,18 +82,18 @@ body{
 }
 
 h1{
-    font-size:30px;
+    font-size: clamp(18px, 2.5vw, 30px);
     margin:0;
 }
 
 p{
-    font-size:40px;
+    font-size: clamp(16px, 4vw, 40px);
 }
 
 /* Dog */
 
 .dog {
-    width:200px;
+    width: clamp(120px, 15vw, 200px);
     margin:10px 0;
     transition:width 0.4s ease;
 }
@@ -108,14 +115,14 @@ p{
 }
 
 .btn{
-    width:120px;
+    width: clamp(72px, 10vw, 120px);
     cursor:pointer;
     user-select:none;
 }
 
 .yes-btn,
 .no-btn {
-    width:120px;
+    width: clamp(72px, 10vw, 120px);
     height:auto;
     display:inline-block;
 }
@@ -135,11 +142,20 @@ p{
 }
 
 .final-text{
-    font-size:22px;
+    font-size: clamp(14px, 2.2vw, 22px);
     line-height:1.4;
     text-align:center;
     display:inline-block;
     padding: 10px 20px;
     background-color: rgba(255,240,240,0.5);
     border-radius: 12px;
+}
+
+/* Small screens tweaks */
+@media (max-width: 600px) {
+    .letter-window{
+        padding:12px;
+        gap:6px;
+    }
+    .buttons{ gap: 16px; }
 }

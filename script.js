@@ -20,6 +20,21 @@ envelope.addEventListener("click", () => {
     },50);
 });
 
+// Responsive scaling: compute scale based on design size (1200x800)
+function updateScale(){
+    const designW = 1200;
+    const designH = 800; // 3/2 aspect ratio -> 1200x800
+    const scaleW = window.innerWidth / designW;
+    const scaleH = window.innerHeight / designH;
+    const scale = Math.min(scaleW, scaleH, 1);
+    document.documentElement.style.setProperty('--scale', scale);
+}
+
+// Run on load and resize
+updateScale();
+window.addEventListener('resize', updateScale);
+window.addEventListener('orientationchange', updateScale);
+
 // Logic to make Yes button interactive
 
 yesBtn.style.position = "relative"
