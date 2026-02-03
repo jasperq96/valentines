@@ -36,11 +36,18 @@ yesBtn.addEventListener("click", () => {
     document.querySelector(".letter-window").classList.add("final");
     buttons.style.display = "none";
     finalText.style.display = "block";
+    
+    // Remove the arrow hint if it exists
+    const arrowHint = document.getElementById("arrow-hint");
+    if (arrowHint) {
+        arrowHint.remove();
+    }
 });
 
 
 // Runaway No Button
 let moveCount = 0;
+let hasMovedOnce = false;
 
 function moveNoButton() {
     const letterWindow = document.querySelector(".letter-window");
@@ -63,6 +70,9 @@ function moveNoButton() {
     // Switch to fixed positioning on first trigger
     if (noBtn.style.position !== "fixed") {
         noBtn.style.position = "fixed";
+        
+        // Center the yes button when no button first moves
+        yesBtn.style.margin = "0 auto";
     }
     
     noBtn.style.left = randX + "px";
@@ -75,6 +85,19 @@ function moveNoButton() {
     if (moveCount === 5) {
         dogImg.src = "sus.gif";
         title.textContent = "Where you clicking?";
+        
+        // Create arrow and text pointing to Yes button
+        const arrow = document.createElement("p");
+        arrow.id = "arrow-hint";
+        arrow.style.textAlign = "center";
+        arrow.style.fontSize = "25px";
+        arrow.style.color = "#333";
+        arrow.style.marginTop = "10px";
+        arrow.innerHTML = "Yes is right here\
+        <br>|<br>|<br>|<br>\\/";
+        
+        // Insert the arrow after the dog image
+        dogImg.parentNode.insertBefore(arrow, dogImg.nextSibling);
     }
 }
 
