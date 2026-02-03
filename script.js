@@ -97,7 +97,7 @@ function moveNoButton() {
     moveCount++;
     
     // After 10 moves, change the image and text
-    if (moveCount === 5) {
+    if (moveCount === 3) {
         dogImg.src = "sus.gif";
         title.textContent = "Where you clicking?";
         
